@@ -1,0 +1,13 @@
+.list-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+form {
+  display: none;
+}
+
+.app-form {
+  display: block;
+}

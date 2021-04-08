@@ -1,25 +1,45 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import { data } from "./api/index";
+import List from "./components/List";
+import { useState, useEffect } from "react";
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+  const [listData, setListData] = useState([]);
+  const [loading, setLoading] = useState(true);
+  useEffect(() => {
+    const response = data().then((data) => {
+      setListData(data);
+      setLoading(false);
+    });
+  }, [listData]);
+  if (loading) {
+    return (
+      <>
+        <h1>loading</h1>
+      </>
+    );
+  } else {
+    return (
+      <>
+        <div className="App">
+          {listData.map((abc) => {
+            const { id, name, lastName } = abc;
+            return (
+              <>
+                {" "}
+                <List
+                  name={name}
+                  lastName={lastName}
+                  key={id}
+                  listItemId={id}
+                />
+              </>
+            );
+          })}
+        </div>
+      </>
+    );
+  }
 }
 
 export default App;
