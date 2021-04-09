@@ -5,7 +5,7 @@ export const handleDelete = (id) => {
   });
 };
 
-export const handleEdit = (id, name, lastName) => {
+export const handleEdit = (id, { name, lastName }) => {
   console.log(id);
   return axios
     .put(`http://localhost:3000/person/${id}`, {

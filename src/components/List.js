@@ -1,12 +1,18 @@
 import React, { useState } from "react";
 import { List, ListItem, Modal } from "@material-ui/core";
-import { handleDelete, handleEdit } from "../utils/utils";
+import { handleDelete, handleEdit } from "../api/index";
 import "./list.css";
 
 function Lists({ name, lastName, listItemId }) {
+  const [personId, setPersonId] = useState("");
   const [editName, setEditName] = useState("");
   const [editLastName, setEditLastName] = useState("");
   const [open, setOpen] = useState(false);
+  const editPerson = {
+    id: personId,
+    name: editName,
+    lastName: editLastName,
+  };
   return (
     <div>
       <div className="app-list">
@@ -30,7 +36,9 @@ function Lists({ name, lastName, listItemId }) {
         className={`${open && "app-form"}`}
         onSubmit={(e) => {
           e.preventDefault();
-          handleEdit(listItemId, name);
+          setPersonId(listItemId);
+          handleEdit(editPerson);
+          setOpen(false);
         }}
       >
         <input
@@ -49,15 +57,7 @@ function Lists({ name, lastName, listItemId }) {
             setEditLastName(e.target.value);
           }}
         />
-        <button
-          type="submit"
-          onSubmit={(e) => {
-            e.preventDefault();
-            handleEdit(listItemId, name, lastName);
-          }}
-        >
-          edit
-        </button>
+        <button type="submit">edit</button>
       </form>
     </div>
   );
